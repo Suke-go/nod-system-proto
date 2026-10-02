@@ -1,0 +1,349 @@
+{
+  "schema_version": 1,
+  "status": "design_acceptance_cases_not_test_execution",
+  "policy_preconditions": "For policy cases, gates are assumed passed except P05 which also documents o=0. Scores are synthetic.",
+  "cases": [
+    {
+      "id": "P01",
+      "category": "policy",
+      "description": "freshなopportunityと継続優勢",
+      "inputs": {
+        "opportunity": 0.9,
+        "belief": [
+          0.03,
+          0.85,
+          0.1,
+          0.02
+        ]
+      },
+      "expected": {
+        "decision_mass": [
+          0.12699999999999997,
+          0.765,
+          0.09000000000000001,
+          0.018000000000000002
+        ],
+        "expected_utilities": {
+          "none": -0.19980000000000003,
+          "continuer": 0.656,
+          "understanding": 0.04980000000000009,
+          "empathic": -1.1747999999999998
+        },
+        "selected_function": "continuer"
+      }
+    },
+    {
+      "id": "P02",
+      "category": "policy",
+      "description": "freshなopportunityと理解優勢",
+      "inputs": {
+        "opportunity": 0.9,
+        "belief": [
+          0.03,
+          0.1,
+          0.85,
+          0.02
+        ]
+      },
+      "expected": {
+        "decision_mass": [
+          0.12699999999999997,
+          0.09000000000000001,
+          0.765,
+          0.018000000000000002
+        ],
+        "expected_utilities": {
+          "none": -0.33480000000000004,
+          "continuer": 0.14975000000000005,
+          "understanding": 0.5898,
+          "empathic": -0.9047999999999999
+        },
+        "selected_function": "understanding"
+      }
+    },
+    {
+      "id": "P03",
+      "category": "policy",
+      "description": "freshなopportunityと共感優勢",
+      "inputs": {
+        "opportunity": 0.9,
+        "belief": [
+          0.02,
+          0.03,
+          0.05,
+          0.9
+        ]
+      },
+      "expected": {
+        "decision_mass": [
+          0.11799999999999998,
+          0.027,
+          0.045000000000000005,
+          0.81
+        ],
+        "expected_utilities": {
+          "none": -0.5094,
+          "continuer": -0.28225,
+          "understanding": -0.24809999999999996,
+          "empathic": 0.726
+        },
+        "selected_function": "empathic"
+      }
+    },
+    {
+      "id": "P04",
+      "category": "policy",
+      "description": "NO_BC優勢",
+      "inputs": {
+        "opportunity": 0.9,
+        "belief": [
+          0.9,
+          0.04,
+          0.04,
+          0.02
+        ]
+      },
+      "expected": {
+        "decision_mass": [
+          0.91,
+          0.036000000000000004,
+          0.036000000000000004,
+          0.018000000000000002
+        ],
+        "expected_utilities": {
+          "none": -0.032400000000000005,
+          "continuer": -0.8694999999999999,
+          "understanding": -1.3244999999999998,
+          "empathic": -2.7624
+        },
+        "selected_function": "none"
+      }
+    },
+    {
+      "id": "P05",
+      "category": "policy",
+      "description": "o=0では質量がNO_BCになる。liveではopportunity gateでもNONE",
+      "inputs": {
+        "opportunity": 0,
+        "belief": [
+          0,
+          0,
+          0,
+          1
+        ]
+      },
+      "expected": {
+        "decision_mass": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "expected_utilities": {
+          "none": 0,
+          "continuer": -1,
+          "understanding": -1.5,
+          "empathic": -3
+        },
+        "selected_function": "none"
+      }
+    },
+    {
+      "id": "S01",
+      "category": "scheduling",
+      "description": "問い合わせ中に追記のみ発生",
+      "timeline": [
+        "request r1: repair=2, revision=4",
+        "append: repair=2, revision=5",
+        "r1 returns within deadline and source age"
+      ],
+      "expected": {
+        "disposition": "accepted",
+        "next": "send latest pending r2",
+        "specific_functions": "disabled if audio append lag >= 300 ms"
+      }
+    },
+    {
+      "id": "S02",
+      "category": "scheduling",
+      "description": "誤認識を訂正した後で旧Jev応答が到着",
+      "timeline": [
+        "r1 sent for repair=2",
+        "correction -> repair=3",
+        "r1 returns"
+      ],
+      "expected": {
+        "disposition": "revised_input",
+        "active_belief": "anchor prediction only until new valid observation"
+      }
+    },
+    {
+      "id": "S03",
+      "category": "scheduling",
+      "description": "Jevが応答しない",
+      "timeline": [
+        "request at t=0",
+        "no response by t=800ms"
+      ],
+      "expected": {
+        "request": "timeout",
+        "retry_same_request": false,
+        "audio_workers": "continue",
+        "belief": "prediction only",
+        "next": "backoff then newest snapshot only"
+      }
+    },
+    {
+      "id": "S04",
+      "category": "scheduling",
+      "description": "次の発話開始後に前発話の応答が到着",
+      "timeline": [
+        "r1 utterance=u1",
+        "u2 opened",
+        "r1 returns"
+      ],
+      "expected": {
+        "disposition": "previous_utterance"
+      }
+    },
+    {
+      "id": "B01",
+      "category": "belief",
+      "description": "時間分割の不変性",
+      "inputs": {
+        "belief": [
+          0.1,
+          0.1,
+          0.1,
+          0.7
+        ],
+        "dt_seconds": [
+          0.05,
+          0.05
+        ]
+      },
+      "expected": {
+        "relation": "predict(predict(b,0.05),0.05) == predict(b,0.10)",
+        "tolerance": 1e-12
+      }
+    },
+    {
+      "id": "B02",
+      "category": "belief",
+      "description": "同じrequestを2回受信",
+      "expected": {
+        "second_disposition": "duplicate",
+        "extra_measurement_updates": 0
+      }
+    },
+    {
+      "id": "B03",
+      "category": "belief",
+      "description": "同一epochの新しい観測",
+      "expected": {
+        "prior_source": "epoch anchor propagated to receipt time",
+        "multiply_previous_observation_again": false
+      }
+    },
+    {
+      "id": "B04",
+      "category": "belief",
+      "description": "q=0",
+      "expected": {
+        "posterior": "prediction from anchor",
+        "tolerance": 1e-12
+      }
+    },
+    {
+      "id": "A01",
+      "category": "acn",
+      "description": "直近に届いたが対象語の終端が1500 ms前",
+      "expected": {
+        "fresh": false,
+        "strength_source": "default",
+        "default_P": 0.25
+      }
+    },
+    {
+      "id": "A02",
+      "category": "acn",
+      "description": "対象語の単語境界が訂正",
+      "expected": {
+        "invalidate": [
+          "target word",
+          "affected adjacent word contrasts"
+        ],
+        "recompute": true,
+        "reexecute_past_action": false
+      }
+    },
+    {
+      "id": "A03",
+      "category": "independence",
+      "description": "WHENとWHATを固定してACN scoreを0→1へ変更",
+      "expected": {
+        "semantic_function": "unchanged",
+        "intensity": "may change",
+        "action_variant": "may change within selected family"
+      }
+    },
+    {
+      "id": "M01",
+      "category": "motor",
+      "description": "opportunityが高いまま継続",
+      "expected": {
+        "max_executes_per_opportunity": 1,
+        "rearm": "requires close/reopen, not cooldown alone"
+      }
+    },
+    {
+      "id": "M02",
+      "category": "motor",
+      "description": "同じ動作が後の新しいopportunityでも選ばれる",
+      "expected": {
+        "allowed": "after completion and cooldown",
+        "new_action_id": true
+      }
+    },
+    {
+      "id": "M03",
+      "category": "motor",
+      "description": "execute送信後にACKがなく配送状態が不明",
+      "expected": {
+        "state": "FAULT",
+        "blind_retry": false,
+        "recovery": "query action status or resynchronize"
+      }
+    },
+    {
+      "id": "M04",
+      "category": "motor",
+      "description": "controllerの表情がpositiveのみ",
+      "expected": {
+        "empathic_action": "STRONG_NOD",
+        "clap": false,
+        "positive_expression": false
+      }
+    },
+    {
+      "id": "R01",
+      "category": "replay",
+      "description": "同じobservations/config/ingest順序/control時刻",
+      "expected": {
+        "action_sequence": "identical",
+        "network_calls": 0,
+        "physical_output": "dry-run by default"
+      }
+    },
+    {
+      "id": "J01",
+      "category": "jev_schema",
+      "description": "確率キー欠落・負値・NaN・総和誤差>1e-4",
+      "expected": {
+        "disposition": "invalid_schema",
+        "belief_reset": false,
+        "clamp_to_success": false
+      }
+    }
+  ]
+}

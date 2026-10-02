@@ -1,0 +1,428 @@
+{
+  "schema_version": 1,
+  "status": "recorded_audio_experiment",
+  "profile": "listener_grounded_v4_2",
+  "audio": {
+    "sample_rate_hz": 16000,
+    "frame_ms": 20,
+    "ring_buffer_seconds": 30,
+    "channels": 1
+  },
+  "runtime": {
+    "control_tick_ms": 50,
+    "event_queue_capacity": 1024,
+    "dashboard_hz": 10,
+    "inference_device_policy": "benchmark_before_selecting"
+  },
+  "asr": {
+    "backend": "local_adapter_tbd",
+    "language": "ja",
+    "partial_interval_target_ms": 250,
+    "stable_prefix_agreement_updates": 2,
+    "stable_prefix_min_age_ms": 300,
+    "utterance_close_silence_ms": 700,
+    "confidence_missing_policy": "renormalize_available_weights",
+    "preserve_final_jobs": true,
+    "final_queue_capacity": 2
+  },
+  "timing": {
+    "backend": "maai_bc_candidate",
+    "language": "jp",
+    "frame_rate_hz": 10,
+    "score_semantics": "uncalibrated_bc_score_until_validated",
+    "opportunity_max_age_ms": 250,
+    "open_threshold": 0.65,
+    "close_threshold": 0.4,
+    "open_hold_ms": 100,
+    "rearm_hold_ms": 200,
+    "expire_open_window_ms": 2000,
+    "scheduled_onset_enabled": false
+  },
+  "semantic": {
+    "backend": "jev",
+    "access_status": "user_confirmed",
+    "api_key_env": "TYPESAFE_API_KEY",
+    "base_url": "https://api.typesafe.ai",
+    "model": "jev-1.13.0",
+    "question_version": "listener-observation-rubric-v3",
+    "context_window_seconds": 20,
+    "max_context_characters": 2000,
+    "max_current_characters": 2000,
+    "debounce_ms": 120,
+    "max_coalesce_wait_ms": 300,
+    "min_dispatch_interval_ms": 300,
+    "max_inflight": 1,
+    "pending_slots": 1,
+    "total_deadline_ms": 1800,
+    "sdk_max_retries": 0,
+    "initial_backoff_ms": 1000,
+    "max_backoff_ms": 30000,
+    "source_max_age_ms": 3500,
+    "append_lag_for_specific_response_ms": 300,
+    "query_on_identical_input": false,
+    "schema": "listener-observation-v2",
+    "question_resource": "jev-observation-v3.json"
+  },
+  "belief": {
+    "class_order": [
+      "no_bc",
+      "continuer",
+      "understanding",
+      "empathic"
+    ],
+    "initial": [
+      0.6,
+      0.25,
+      0.1,
+      0.05
+    ],
+    "transition": {
+      "type": "continuous_reset",
+      "stationary": [
+        0.6,
+        0.25,
+        0.1,
+        0.05
+      ],
+      "half_life_ms": 4000
+    },
+    "calibration": {
+      "type": "identity_until_fitted",
+      "probability_floor": 1e-06
+    },
+    "observation_mode": "replace_within_utterance",
+    "reliability_weights": {
+      "asr_confidence": 0.3,
+      "stability": 0.5,
+      "revision_quality": 0.2
+    },
+    "revision_window_updates": 5,
+    "max_semantic_epoch_ms": 30000
+  },
+  "prominence": {
+    "backend": "acn_numpy",
+    "model_manifest": "models/acn/manifest.json",
+    "mode": "bidirectional_delayed",
+    "feature_order": [
+      "log_word_duration",
+      "mean_mfcc_0",
+      "std_mfcc_2"
+    ],
+    "normalization": "checkpoint_defined",
+    "score_mapping": "artifact_defined",
+    "max_audio_age_ms": 1000,
+    "update_timeout_ms": 100,
+    "default_strength": 0.25,
+    "missing_model_mode": "degraded_explicit",
+    "causal_masking_enabled": false
+  },
+  "policy": {
+    "functions": [
+      "none",
+      "continuer",
+      "understanding",
+      "empathic"
+    ],
+    "utility_by_function": {
+      "none": [
+        0,
+        -0.2,
+        -0.4,
+        -0.6
+      ],
+      "continuer": [
+        -1,
+        1,
+        0.25,
+        -0.25
+      ],
+      "understanding": [
+        -1.5,
+        0.2,
+        1,
+        -0.15
+      ],
+      "empathic": [
+        -3,
+        -1,
+        -0.6,
+        1.4
+      ]
+    },
+    "tie_break_order": [
+      "none",
+      "continuer",
+      "understanding",
+      "empathic"
+    ],
+    "minimum_gain_over_none": 0.1,
+    "minimum_asr_reliability": 0.4,
+    "max_actions_per_opportunity": 1,
+    "allow_clap": false,
+    "intensity_ranges": {
+      "continuer": [
+        0.15,
+        0.35
+      ],
+      "understanding": [
+        0.25,
+        0.7
+      ],
+      "empathic": [
+        0.35,
+        0.75
+      ]
+    },
+    "strong_nod_threshold": 0.6
+  },
+  "motor": {
+    "cooldown_after_completion_ms": 1800,
+    "ack_timeout_ms": 300,
+    "execution_timeout_ms": 2500,
+    "command_ttl_ms": 250,
+    "prepare_ttl_ms": 500,
+    "automatic_execute_retry": false,
+    "default_durations_ms": {
+      "SMALL_NOD": 350,
+      "STRONG_NOD": 500,
+      "EMPATHIC_EXPRESSION": 1000
+    }
+  },
+  "output": {
+    "transport": "websocket",
+    "bind_host": "127.0.0.1",
+    "port": 8765,
+    "clock_protocol": "relative_ttl_and_offset_handshake",
+    "max_inflight_actions": 1,
+    "unknown_delivery_policy": "query_status_then_fault"
+  },
+  "logging": {
+    "format": "jsonl",
+    "record_audio": false,
+    "record_transcript": true,
+    "retain_raw_jev_distribution": true,
+    "record_dropped_observations": true,
+    "include_secret_headers": false,
+    "flush_interval_ms": 1000,
+    "decision_diagnostics": true,
+    "research_diagnostics": true
+  },
+  "evaluation": {
+    "semantic_pilot_utterances": 60,
+    "semantic_target_utterances": 120,
+    "load_test_minutes": 30,
+    "decision_to_command_p95_target_ms": 50,
+    "targets_status": "provisional_not_measured"
+  },
+  "listener": {
+    "enabled": true,
+    "version": 4,
+    "condition": "acoustic_only",
+    "state_order": [
+      "unperceived",
+      "perceived_unresolved",
+      "interpreted_neutral",
+      "interpreted_positive",
+      "interpreted_negative",
+      "interpreted_mixed"
+    ],
+    "initial": [
+      0.4,
+      0.35,
+      0.1,
+      0.05,
+      0.05,
+      0.05
+    ],
+    "transition": [
+      [
+        0.55,
+        0.26249999999999996,
+        0.07500000000000001,
+        0.037500000000000006,
+        0.037500000000000006,
+        0.037500000000000006
+      ],
+      [
+        0.30000000000000004,
+        0.5125,
+        0.07500000000000001,
+        0.037500000000000006,
+        0.037500000000000006,
+        0.037500000000000006
+      ],
+      [
+        0.30000000000000004,
+        0.26249999999999996,
+        0.325,
+        0.037500000000000006,
+        0.037500000000000006,
+        0.037500000000000006
+      ],
+      [
+        0.30000000000000004,
+        0.26249999999999996,
+        0.07500000000000001,
+        0.2875,
+        0.037500000000000006,
+        0.037500000000000006
+      ],
+      [
+        0.30000000000000004,
+        0.26249999999999996,
+        0.07500000000000001,
+        0.037500000000000006,
+        0.2875,
+        0.037500000000000006
+      ],
+      [
+        0.30000000000000004,
+        0.26249999999999996,
+        0.07500000000000001,
+        0.037500000000000006,
+        0.037500000000000006,
+        0.2875
+      ]
+    ],
+    "transition_action_effect": "identity_assumption_no_grounding_from_own_nod",
+    "state_half_life_ms": 5000,
+    "audio_max_age_ms": 350,
+    "observation_model": {
+      "family": "hierarchical_dirichlet_report",
+      "reports": [
+        "perception",
+        "resolved",
+        "neutral",
+        "positive",
+        "negative",
+        "mixed"
+      ],
+      "concentration": {
+        "perception": 1.0,
+        "interpretability": 1.0,
+        "appraisal": 1.0
+      },
+      "probability_floor": 1e-06,
+      "status": "designed_unfitted"
+    },
+    "policy": {
+      "history_window_ms": 15000,
+      "max_actions_per_window": 4,
+      "intensity_ranges": {
+        "continuer": [
+          0.15,
+          0.35
+        ],
+        "understanding": [
+          0.35,
+          0.7
+        ],
+        "empathic": [
+          0.3,
+          0.55
+        ]
+      },
+      "expression_upgrade_gap_ms": 150,
+      "continuer_max_age_ms": 1200,
+      "decision_model": {
+        "family": "additive_bayes_risk_v1",
+        "status": "designed_unfitted",
+        "loss": {
+          "none": [
+            0.0,
+            0.6,
+            2.0,
+            2.0,
+            2.0,
+            2.0
+          ],
+          "continuer": [
+            1.2,
+            0.0,
+            0.45,
+            0.65,
+            0.65,
+            0.65
+          ],
+          "receipt": [
+            2.0,
+            1.0,
+            0.0,
+            0.35,
+            0.35,
+            0.35
+          ],
+          "attentive": [
+            2.0,
+            1.2,
+            0.6,
+            0.35,
+            0.35,
+            0.0
+          ],
+          "warm": [
+            4.0,
+            3.0,
+            2.0,
+            0.0,
+            5.0,
+            2.0
+          ],
+          "concerned": [
+            4.0,
+            3.0,
+            2.0,
+            5.0,
+            0.0,
+            2.0
+          ]
+        },
+        "motion": {
+          "none": 0.0,
+          "continuer": 0.05,
+          "receipt": 0.08,
+          "attentive": 0.1,
+          "warm": 0.1,
+          "concerned": 0.1
+        },
+        "acoustic_overlap": {
+          "none": 0.0,
+          "continuer": 0.65,
+          "receipt": 0.05,
+          "attentive": 0.05,
+          "warm": 0.05,
+          "concerned": 0.05
+        },
+        "incomplete_receipt_cost": 0.4,
+        "substantive_demand_cost": 2.0,
+        "repetition_cost": 0.1,
+        "minimum_gain": 0.0
+      }
+    },
+    "incremental": {
+      "retention_ms": 3500,
+      "max_items": 8,
+      "retain_interpretability": 0.55,
+      "retain_reliability": 0.55
+    },
+    "temporal_model": "single_reset_kernel",
+    "commit_scope": "asr_utterance"
+  },
+  "research": {
+    "method": "scoped_report_bayes_filter_concrete_action_risk",
+    "condition": "acoustic_only",
+    "protocol_version": "listener-v4",
+    "parameters_status": "observation_transition_and_loss_designed_unfitted",
+    "state_scope": "robot_operational_listener_state_not_human_mental_truth",
+    "structural_basis": [
+      "Kopp et al. 2007",
+      "Schlangen & Skantze 2009",
+      "Meguro et al. 2010"
+    ],
+    "semantic_schema": "listener-observation-v2",
+    "policy_revision": "additive-risk-1",
+    "observation_assumption": "conditional_independence_of_reports_given_state; uniform_undefined_axes",
+    "appraisal_scope": "speaker_evaluation_of_experience_not_direct_measurement_of_empathy_desire",
+    "temporal_assumption": "one_continuous_reset_kernel; commit_only_at_asr_utterance_boundary"
+  }
+}

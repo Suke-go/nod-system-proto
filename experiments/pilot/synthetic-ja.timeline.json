@@ -1,0 +1,937 @@
+{
+  "schema_version": 1,
+  "kind": "nod_audio_timeline",
+  "duration_ms": 7345,
+  "timing_mode": "causal_prefix_offline_measured_independent_workers",
+  "prominence": "missing_default_strength",
+  "events": [
+    {
+      "kind": "opportunity",
+      "at_ms": 138,
+      "data": {
+        "source_ms": 100,
+        "score": 0.3025328814983368,
+        "audio_end_sample": 1600
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 225,
+      "data": {
+        "source_ms": 200,
+        "score": 0.0915713980793953,
+        "audio_end_sample": 3200
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 327,
+      "data": {
+        "source_ms": 300,
+        "score": 0.0404837429523468,
+        "audio_end_sample": 4800
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 427,
+      "data": {
+        "source_ms": 400,
+        "score": 0.10827269405126572,
+        "audio_end_sample": 6400
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 524,
+      "data": {
+        "source_ms": 500,
+        "score": 0.2834310233592987,
+        "audio_end_sample": 8000
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 628,
+      "data": {
+        "source_ms": 600,
+        "score": 0.28393423557281494,
+        "audio_end_sample": 9600
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 726,
+      "data": {
+        "source_ms": 700,
+        "score": 0.15744531154632568,
+        "audio_end_sample": 11200
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 825,
+      "data": {
+        "source_ms": 800,
+        "score": 0.12594103813171387,
+        "audio_end_sample": 12800
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 926,
+      "data": {
+        "source_ms": 900,
+        "score": 0.1459428369998932,
+        "audio_end_sample": 14400
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 1030,
+      "data": {
+        "source_ms": 1000,
+        "score": 0.290526807308197,
+        "audio_end_sample": 16000
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 1123,
+      "data": {
+        "source_ms": 1100,
+        "score": 0.3017308712005615,
+        "audio_end_sample": 17600
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 1227,
+      "data": {
+        "source_ms": 1200,
+        "score": 0.35253384709358215,
+        "audio_end_sample": 19200
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 1322,
+      "data": {
+        "source_ms": 1300,
+        "score": 0.18294894695281982,
+        "audio_end_sample": 20800
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 1422,
+      "data": {
+        "source_ms": 1400,
+        "score": 0.17059452831745148,
+        "audio_end_sample": 22400
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 1526,
+      "data": {
+        "source_ms": 1500,
+        "score": 0.4051535129547119,
+        "audio_end_sample": 24000
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 1627,
+      "data": {
+        "source_ms": 1600,
+        "score": 0.2177855670452118,
+        "audio_end_sample": 25600
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 1724,
+      "data": {
+        "source_ms": 1700,
+        "score": 0.18586966395378113,
+        "audio_end_sample": 27200
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 1826,
+      "data": {
+        "source_ms": 1800,
+        "score": 0.2705872058868408,
+        "audio_end_sample": 28800
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 1923,
+      "data": {
+        "source_ms": 1900,
+        "score": 0.3904143273830414,
+        "audio_end_sample": 30400
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 2028,
+      "data": {
+        "source_ms": 2000,
+        "score": 0.616310179233551,
+        "audio_end_sample": 32000
+      }
+    },
+    {
+      "kind": "asr",
+      "at_ms": 2119,
+      "data": {
+        "utterance_id": "u1",
+        "text": "機能は行きまで。",
+        "final": false,
+        "source_ms": 1000,
+        "audio_end_sample": 16000
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 2126,
+      "data": {
+        "source_ms": 2100,
+        "score": 0.7225448489189148,
+        "audio_end_sample": 33600
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 2226,
+      "data": {
+        "source_ms": 2200,
+        "score": 0.7353678941726685,
+        "audio_end_sample": 35200
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 2328,
+      "data": {
+        "source_ms": 2300,
+        "score": 0.6234720349311829,
+        "audio_end_sample": 36800
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 2423,
+      "data": {
+        "source_ms": 2400,
+        "score": 0.5180298089981079,
+        "audio_end_sample": 38400
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 2524,
+      "data": {
+        "source_ms": 2500,
+        "score": 0.42565810680389404,
+        "audio_end_sample": 40000
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 2632,
+      "data": {
+        "source_ms": 2600,
+        "score": 0.3498469293117523,
+        "audio_end_sample": 41600
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 2731,
+      "data": {
+        "source_ms": 2700,
+        "score": 0.2911469638347626,
+        "audio_end_sample": 43200
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 2828,
+      "data": {
+        "source_ms": 2800,
+        "score": 0.24598164856433868,
+        "audio_end_sample": 44800
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 2926,
+      "data": {
+        "source_ms": 2900,
+        "score": 0.17938444018363953,
+        "audio_end_sample": 46400
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 3029,
+      "data": {
+        "source_ms": 3000,
+        "score": 0.03769618272781372,
+        "audio_end_sample": 48000
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 3125,
+      "data": {
+        "source_ms": 3100,
+        "score": 0.024139346554875374,
+        "audio_end_sample": 49600
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 3229,
+      "data": {
+        "source_ms": 3200,
+        "score": 0.024579815566539764,
+        "audio_end_sample": 51200
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 3325,
+      "data": {
+        "source_ms": 3300,
+        "score": 0.03534242883324623,
+        "audio_end_sample": 52800
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 3427,
+      "data": {
+        "source_ms": 3400,
+        "score": 0.0709092915058136,
+        "audio_end_sample": 54400
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 3530,
+      "data": {
+        "source_ms": 3500,
+        "score": 0.41867876052856445,
+        "audio_end_sample": 56000
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 3629,
+      "data": {
+        "source_ms": 3600,
+        "score": 0.2458031326532364,
+        "audio_end_sample": 57600
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 3727,
+      "data": {
+        "source_ms": 3700,
+        "score": 0.27573174238204956,
+        "audio_end_sample": 59200
+      }
+    },
+    {
+      "kind": "asr",
+      "at_ms": 3808,
+      "data": {
+        "utterance_id": "u1",
+        "text": "昨日は駅まで歩いていきました。",
+        "final": false,
+        "source_ms": 3000,
+        "audio_end_sample": 48000
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 3827,
+      "data": {
+        "source_ms": 3800,
+        "score": 0.15982910990715027,
+        "audio_end_sample": 60800
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 3927,
+      "data": {
+        "source_ms": 3900,
+        "score": 0.11561836302280426,
+        "audio_end_sample": 62400
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 4029,
+      "data": {
+        "source_ms": 4000,
+        "score": 0.0323307178914547,
+        "audio_end_sample": 64000
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 4129,
+      "data": {
+        "source_ms": 4100,
+        "score": 0.019945688545703888,
+        "audio_end_sample": 65600
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 4229,
+      "data": {
+        "source_ms": 4200,
+        "score": 0.027833091095089912,
+        "audio_end_sample": 67200
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 4325,
+      "data": {
+        "source_ms": 4300,
+        "score": 0.0351858027279377,
+        "audio_end_sample": 68800
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 4427,
+      "data": {
+        "source_ms": 4400,
+        "score": 0.04955041781067848,
+        "audio_end_sample": 70400
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 4528,
+      "data": {
+        "source_ms": 4500,
+        "score": 0.06005987524986267,
+        "audio_end_sample": 72000
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 4624,
+      "data": {
+        "source_ms": 4600,
+        "score": 0.04033753648400307,
+        "audio_end_sample": 73600
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 4726,
+      "data": {
+        "source_ms": 4700,
+        "score": 0.08955533802509308,
+        "audio_end_sample": 75200
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 4828,
+      "data": {
+        "source_ms": 4800,
+        "score": 0.11987841129302979,
+        "audio_end_sample": 76800
+      }
+    },
+    {
+      "kind": "asr",
+      "at_ms": 4864,
+      "data": {
+        "utterance_id": "u1",
+        "text": "昨日は駅まで歩いていきました。それから、と。",
+        "final": false,
+        "source_ms": 4000,
+        "audio_end_sample": 64000
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 4928,
+      "data": {
+        "source_ms": 4900,
+        "score": 0.05867798998951912,
+        "audio_end_sample": 78400
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 5028,
+      "data": {
+        "source_ms": 5000,
+        "score": 0.0523030161857605,
+        "audio_end_sample": 80000
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 5128,
+      "data": {
+        "source_ms": 5100,
+        "score": 0.05669210106134415,
+        "audio_end_sample": 81600
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 5227,
+      "data": {
+        "source_ms": 5200,
+        "score": 0.04767230525612831,
+        "audio_end_sample": 83200
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 5330,
+      "data": {
+        "source_ms": 5300,
+        "score": 0.05351844057440758,
+        "audio_end_sample": 84800
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 5429,
+      "data": {
+        "source_ms": 5400,
+        "score": 0.10318509489297867,
+        "audio_end_sample": 86400
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 5527,
+      "data": {
+        "source_ms": 5500,
+        "score": 0.15507231652736664,
+        "audio_end_sample": 88000
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 5626,
+      "data": {
+        "source_ms": 5600,
+        "score": 0.5979844331741333,
+        "audio_end_sample": 89600
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 5728,
+      "data": {
+        "source_ms": 5700,
+        "score": 0.31429705023765564,
+        "audio_end_sample": 91200
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 5829,
+      "data": {
+        "source_ms": 5800,
+        "score": 0.6240230202674866,
+        "audio_end_sample": 92800
+      }
+    },
+    {
+      "kind": "asr",
+      "at_ms": 5899,
+      "data": {
+        "utterance_id": "u1",
+        "text": "昨日は駅まで歩いていきました。それから、友達と一緒に",
+        "final": false,
+        "source_ms": 5000,
+        "audio_end_sample": 80000
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 5931,
+      "data": {
+        "source_ms": 5900,
+        "score": 0.2643462121486664,
+        "audio_end_sample": 94400
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 6030,
+      "data": {
+        "source_ms": 6000,
+        "score": 0.06434184312820435,
+        "audio_end_sample": 96000
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 6132,
+      "data": {
+        "source_ms": 6100,
+        "score": 0.03767537325620651,
+        "audio_end_sample": 97600
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 6230,
+      "data": {
+        "source_ms": 6200,
+        "score": 0.06468185782432556,
+        "audio_end_sample": 99200
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 6330,
+      "data": {
+        "source_ms": 6300,
+        "score": 0.12237513810396194,
+        "audio_end_sample": 100800
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 6432,
+      "data": {
+        "source_ms": 6400,
+        "score": 0.22815942764282227,
+        "audio_end_sample": 102400
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 6527,
+      "data": {
+        "source_ms": 6500,
+        "score": 0.3120732009410858,
+        "audio_end_sample": 104000
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 6628,
+      "data": {
+        "source_ms": 6600,
+        "score": 0.5445902943611145,
+        "audio_end_sample": 105600
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 6730,
+      "data": {
+        "source_ms": 6700,
+        "score": 0.6322901844978333,
+        "audio_end_sample": 107200
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 6829,
+      "data": {
+        "source_ms": 6800,
+        "score": 0.546742856502533,
+        "audio_end_sample": 108800
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 6925,
+      "data": {
+        "source_ms": 6900,
+        "score": 0.44903886318206787,
+        "audio_end_sample": 110400
+      }
+    },
+    {
+      "kind": "asr",
+      "at_ms": 6927,
+      "data": {
+        "utterance_id": "u1",
+        "text": "昨日は駅まで歩いていきました。それから、友達と一緒に都所管で勉強。",
+        "final": false,
+        "source_ms": 6000,
+        "audio_end_sample": 96000
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 7028,
+      "data": {
+        "source_ms": 7000,
+        "score": 0.36502736806869507,
+        "audio_end_sample": 112000
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 7125,
+      "data": {
+        "source_ms": 7100,
+        "score": 0.29595136642456055,
+        "audio_end_sample": 113600
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 7224,
+      "data": {
+        "source_ms": 7200,
+        "score": 0.24116361141204834,
+        "audio_end_sample": 115200
+      }
+    },
+    {
+      "kind": "opportunity",
+      "at_ms": 7324,
+      "data": {
+        "source_ms": 7300,
+        "score": 0.1993236243724823,
+        "audio_end_sample": 116800
+      }
+    },
+    {
+      "kind": "asr",
+      "at_ms": 7953,
+      "data": {
+        "utterance_id": "u1",
+        "text": "昨日は駅まで歩いていきました。それから、友達と一緒に都所間で勉強しました。",
+        "final": false,
+        "source_ms": 7000,
+        "audio_end_sample": 112000
+      }
+    },
+    {
+      "kind": "asr",
+      "at_ms": 8901,
+      "data": {
+        "utterance_id": "u1",
+        "text": "昨日は駅まで歩いていきました。それから、友達と一緒に都所間で勉強しました。",
+        "final": true,
+        "source_ms": 7345,
+        "audio_end_sample": 117520
+      }
+    }
+  ],
+  "final_words": [
+    {
+      "text": "昨",
+      "start_sample": 0,
+      "end_sample": 3520,
+      "probability": 0.6951680779457092
+    },
+    {
+      "text": "日",
+      "start_sample": 3520,
+      "end_sample": 5760,
+      "probability": 0.7639873027801514
+    },
+    {
+      "text": "は",
+      "start_sample": 5760,
+      "end_sample": 8960,
+      "probability": 0.9441535472869873
+    },
+    {
+      "text": "駅",
+      "start_sample": 8960,
+      "end_sample": 12160,
+      "probability": 0.9096266428629557
+    },
+    {
+      "text": "まで",
+      "start_sample": 12160,
+      "end_sample": 15680,
+      "probability": 0.9723970890045166
+    },
+    {
+      "text": "歩",
+      "start_sample": 15680,
+      "end_sample": 19200,
+      "probability": 0.9983503222465515
+    },
+    {
+      "text": "いて",
+      "start_sample": 19200,
+      "end_sample": 22400,
+      "probability": 0.9965716600418091
+    },
+    {
+      "text": "いき",
+      "start_sample": 22400,
+      "end_sample": 25600,
+      "probability": 0.5907884240150452
+    },
+    {
+      "text": "ました。",
+      "start_sample": 25600,
+      "end_sample": 32000,
+      "probability": 0.9804107546806335
+    },
+    {
+      "text": "それ",
+      "start_sample": 43840,
+      "end_sample": 50240,
+      "probability": 0.9481428861618042
+    },
+    {
+      "text": "から、",
+      "start_sample": 50240,
+      "end_sample": 54720,
+      "probability": 0.9995442032814026
+    },
+    {
+      "text": "友",
+      "start_sample": 62720,
+      "end_sample": 64960,
+      "probability": 0.9444588422775269
+    },
+    {
+      "text": "達",
+      "start_sample": 64960,
+      "end_sample": 69440,
+      "probability": 0.9476215243339539
+    },
+    {
+      "text": "と",
+      "start_sample": 69440,
+      "end_sample": 72000,
+      "probability": 0.9985464215278625
+    },
+    {
+      "text": "一",
+      "start_sample": 72000,
+      "end_sample": 74880,
+      "probability": 0.9740402698516846
+    },
+    {
+      "text": "緒",
+      "start_sample": 74880,
+      "end_sample": 76800,
+      "probability": 0.9958126246929169
+    },
+    {
+      "text": "に",
+      "start_sample": 76800,
+      "end_sample": 79040,
+      "probability": 0.9994637370109558
+    },
+    {
+      "text": "都",
+      "start_sample": 79040,
+      "end_sample": 81600,
+      "probability": 0.5120424628257751
+    },
+    {
+      "text": "所",
+      "start_sample": 81600,
+      "end_sample": 82880,
+      "probability": 0.2711935341358185
+    },
+    {
+      "text": "間",
+      "start_sample": 82880,
+      "end_sample": 86080,
+      "probability": 0.2988046407699585
+    },
+    {
+      "text": "で",
+      "start_sample": 86080,
+      "end_sample": 89600,
+      "probability": 0.997543215751648
+    },
+    {
+      "text": "勉",
+      "start_sample": 89600,
+      "end_sample": 93120,
+      "probability": 0.997024416923523
+    },
+    {
+      "text": "強",
+      "start_sample": 93120,
+      "end_sample": 95040,
+      "probability": 0.9944941401481628
+    },
+    {
+      "text": "しました。",
+      "start_sample": 95040,
+      "end_sample": 103360,
+      "probability": 0.986599862575531
+    }
+  ],
+  "latency_ms": {
+    "asr": {
+      "count": 7,
+      "p50": 927,
+      "p95": 1119,
+      "max": 1119
+    },
+    "timing": {
+      "count": 73,
+      "p50": 27,
+      "p95": 32,
+      "max": 38
+    }
+  },
+  "asr_partial_interval_ms": 1000,
+  "audio_sha256": "ae8a686aadaed7a66282fe69651e057880284a70a3f0edaa8ff64282e2f2eeb4",
+  "models": {
+    "schema_version": 1,
+    "asr_model": "base",
+    "asr_repo": "Systran/faster-whisper-base",
+    "asr_revision": "ebe41f70d5b6dfa9166e2c581c45c9c0cfc57b66",
+    "timing_repo": "maai-kyoto/vap_bc_jp",
+    "timing_revision": "309d7936f5a929870e3e02a563729b7dc8b78a6e",
+    "timing_file": "vap-bc_state_dict_jp_10hz_20000msec.pt",
+    "mode": "bc",
+    "language": "jp",
+    "frame_rate": 10,
+    "context_seconds": 20,
+    "model_type": "normal",
+    "runtime_device": "cpu",
+    "asr_compute_type": "int8",
+    "cpc_url": "https://dl.fbaipublicfiles.com/librilight/CPC_checkpoints/60k_epoch4-d0f474de.pt",
+    "versions": {
+      "maai": "0.2.10",
+      "torch": "2.14.0",
+      "faster-whisper": "1.2.1",
+      "ctranslate2": "4.8.2"
+    },
+    "sha256": {
+      "asr/config.json": "56a6d8110d311f19c8f0471e562832c7527f146b567275bfca59fcf7c184da9a",
+      "asr/model.bin": "d01c3014881c9c6f3133c182f3d2887eb6ca1c789a7538c5c007196857a0a6a9",
+      "asr/README.md": "b922acef3616e27b1d416260b63ba7114c732f0315012006781af2da69cd1ebf",
+      "asr/tokenizer.json": "fb7b63191e9bb045082c79fd742a3106a12c99513ab30df4a0d47fa6cb6fd0ab",
+      "asr/vocabulary.txt": "34ce3fe1c5041027b3f8d42912270993f986dbc4bb34cf27f951e34a1e453913",
+      "timing/cpc.pt": "d0f474de968c7243c20f43dee1626681618f2f150d3e638e82b79e22563b17f1",
+      "timing/model.pt": "2a7283dde05a827e7587a2e1b2efc745a3eccb0308335e331933d990b502d97a"
+    }
+  }
+}

@@ -1,0 +1,773 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "nod v1 boundary contracts — design draft",
+  "description": "Bounds and shapes only. Cross-field checks, probability sum, time order and referential consistency are specified in detailed-design.md.",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/asr_snapshot"
+    },
+    {
+      "$ref": "#/$defs/semantic_observation"
+    },
+    {
+      "$ref": "#/$defs/opportunity"
+    },
+    {
+      "$ref": "#/$defs/prominence"
+    },
+    {
+      "$ref": "#/$defs/action_command"
+    },
+    {
+      "$ref": "#/$defs/controller_event"
+    },
+    {
+      "$ref": "#/$defs/controller_hello"
+    }
+  ],
+  "$defs": {
+    "distribution": {
+      "type": "object",
+      "properties": {
+        "no_bc": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "continuer": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "understanding": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "empathic": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      },
+      "required": [
+        "no_bc",
+        "continuer",
+        "understanding",
+        "empathic"
+      ],
+      "additionalProperties": false
+    },
+    "audio_span": {
+      "type": "object",
+      "properties": {
+        "start_sample": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "end_sample": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "sample_rate_hz": {
+          "const": 16000
+        }
+      },
+      "required": [
+        "start_sample",
+        "end_sample",
+        "sample_rate_hz"
+      ],
+      "additionalProperties": false
+    },
+    "asr_snapshot": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": 1
+        },
+        "session_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "event_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ingest_seq": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "created_monotonic_ns": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "kind": {
+          "const": "asr_snapshot"
+        },
+        "utterance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "repair_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "source": {
+          "$ref": "#/$defs/audio_span"
+        },
+        "partial_text": {
+          "type": "string"
+        },
+        "stable_prefix": {
+          "type": "string"
+        },
+        "unstable_suffix": {
+          "type": "string"
+        },
+        "confidence": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "is_final": {
+          "type": "boolean"
+        },
+        "boundary_revision": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "schema_version",
+        "session_id",
+        "event_id",
+        "ingest_seq",
+        "created_monotonic_ns",
+        "kind",
+        "utterance_id",
+        "revision",
+        "repair_epoch",
+        "source",
+        "partial_text",
+        "stable_prefix",
+        "unstable_suffix",
+        "confidence",
+        "is_final",
+        "boundary_revision"
+      ],
+      "additionalProperties": false
+    },
+    "semantic_observation": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": 1
+        },
+        "session_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "event_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ingest_seq": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "created_monotonic_ns": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "kind": {
+          "const": "semantic_observation"
+        },
+        "utterance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "request_seq": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "repair_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "asr_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "input_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "question_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "model_requested": {
+          "type": "string",
+          "minLength": 1
+        },
+        "model_resolved": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source": {
+          "$ref": "#/$defs/audio_span"
+        },
+        "request_started_ns": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "response_received_ns": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "probabilities": {
+          "$ref": "#/$defs/distribution"
+        },
+        "provider_confidence": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "asr_reliability": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "disposition": {
+          "enum": [
+            "accepted",
+            "duplicate",
+            "expired",
+            "revised_input",
+            "superseded",
+            "previous_utterance"
+          ]
+        }
+      },
+      "required": [
+        "schema_version",
+        "session_id",
+        "event_id",
+        "ingest_seq",
+        "created_monotonic_ns",
+        "kind",
+        "utterance_id",
+        "request_id",
+        "request_seq",
+        "repair_epoch",
+        "asr_revision",
+        "input_sha256",
+        "question_version",
+        "model_requested",
+        "model_resolved",
+        "source",
+        "request_started_ns",
+        "response_received_ns",
+        "probabilities",
+        "provider_confidence",
+        "asr_reliability",
+        "disposition"
+      ],
+      "additionalProperties": false
+    },
+    "opportunity": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": 1
+        },
+        "session_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "event_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ingest_seq": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "created_monotonic_ns": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "kind": {
+          "const": "opportunity"
+        },
+        "source": {
+          "$ref": "#/$defs/audio_span"
+        },
+        "model_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "score_semantics": {
+          "enum": [
+            "uncalibrated_bc_score",
+            "calibrated_opportunity_probability"
+          ]
+        },
+        "prediction_horizon_ms": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "estimated_onset_offset_ms": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "valid_until_monotonic_ns": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "schema_version",
+        "session_id",
+        "event_id",
+        "ingest_seq",
+        "created_monotonic_ns",
+        "kind",
+        "source",
+        "model_id",
+        "score",
+        "score_semantics",
+        "prediction_horizon_ms",
+        "estimated_onset_offset_ms",
+        "valid_until_monotonic_ns"
+      ],
+      "additionalProperties": false
+    },
+    "prominence": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": 1
+        },
+        "session_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "event_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ingest_seq": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "created_monotonic_ns": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "kind": {
+          "const": "prominence"
+        },
+        "source": {
+          "$ref": "#/$defs/audio_span"
+        },
+        "word_span_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "boundary_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "model_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "normalizer_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "calibrator_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "raw_score": {
+          "type": "number"
+        },
+        "score": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "boundary_confidence": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "mode": {
+          "enum": [
+            "bidirectional_delayed",
+            "causal_validated"
+          ]
+        },
+        "lookahead_end_sample": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "available_monotonic_ns": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "valid_until_monotonic_ns": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "schema_version",
+        "session_id",
+        "event_id",
+        "ingest_seq",
+        "created_monotonic_ns",
+        "kind",
+        "source",
+        "word_span_id",
+        "boundary_revision",
+        "model_id",
+        "normalizer_id",
+        "calibrator_id",
+        "raw_score",
+        "score",
+        "boundary_confidence",
+        "mode",
+        "lookahead_end_sample",
+        "available_monotonic_ns",
+        "valid_until_monotonic_ns"
+      ],
+      "additionalProperties": false
+    },
+    "action_command": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": 1
+        },
+        "kind": {
+          "const": "action_command"
+        },
+        "session_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "connection_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "command_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "action_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "command": {
+          "enum": [
+            "prepare",
+            "execute",
+            "cancel_prepare",
+            "stop"
+          ]
+        },
+        "action": {
+          "enum": [
+            "SMALL_NOD",
+            "STRONG_NOD",
+            "EMPATHIC_EXPRESSION",
+            "CLAP"
+          ]
+        },
+        "intensity": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "duration_ms": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5000
+        },
+        "created_monotonic_ns": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "ttl_ms": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "onset_delay_ms": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "opportunity_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "decision_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expression": {
+          "enum": [
+            "neutral",
+            "attentive",
+            "warm",
+            "concerned"
+          ]
+        }
+      },
+      "required": [
+        "schema_version",
+        "kind",
+        "session_id",
+        "connection_epoch",
+        "command_id",
+        "action_id",
+        "command",
+        "action",
+        "intensity",
+        "duration_ms",
+        "created_monotonic_ns",
+        "ttl_ms",
+        "onset_delay_ms",
+        "opportunity_id",
+        "decision_id"
+      ],
+      "additionalProperties": false
+    },
+    "controller_event": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": 1
+        },
+        "kind": {
+          "const": "controller_event"
+        },
+        "session_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "connection_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "command_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "action_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "enum": [
+            "accepted",
+            "prepared",
+            "started",
+            "completed",
+            "rejected",
+            "cancelled",
+            "failed",
+            "unknown"
+          ]
+        },
+        "controller_clock_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "controller_monotonic_ns": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "schema_version",
+        "kind",
+        "session_id",
+        "connection_epoch",
+        "command_id",
+        "action_id",
+        "status",
+        "controller_clock_id",
+        "controller_monotonic_ns",
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "controller_hello": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": 1
+        },
+        "kind": {
+          "const": "controller_hello"
+        },
+        "controller_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "connection_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "controller_clock_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "supported_actions": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "SMALL_NOD",
+              "STRONG_NOD",
+              "EMPATHIC_EXPRESSION",
+              "CLAP"
+            ]
+          },
+          "uniqueItems": true,
+          "minItems": 1
+        },
+        "supports_prepare": {
+          "type": "boolean"
+        },
+        "supports_stop": {
+          "type": "boolean"
+        },
+        "supports_status_query": {
+          "type": "boolean"
+        },
+        "deduplication_window_ms": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "empathic_expression_style": {
+          "enum": [
+            "neutral_acknowledgement",
+            "positive",
+            "negative",
+            "unspecified"
+          ]
+        },
+        "supported_expressions": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "neutral",
+              "attentive",
+              "warm",
+              "concerned"
+            ]
+          },
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "schema_version",
+        "kind",
+        "controller_id",
+        "connection_epoch",
+        "controller_clock_id",
+        "supported_actions",
+        "supports_prepare",
+        "supports_stop",
+        "supports_status_query",
+        "deduplication_window_ms",
+        "empathic_expression_style"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

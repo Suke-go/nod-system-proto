@@ -1,0 +1,24 @@
+{"id": "n01", "state": {"stable_transcript": "", "current_partial": "ええと、あの、その。", "recent_context": []}, "reference_label": "no_bc", "label_status": "draft"}
+{"id": "c01", "state": {"stable_transcript": "昨日、駅へ向かって歩いていたんです。", "current_partial": "それで途中に、", "recent_context": []}, "reference_label": "continuer", "label_status": "draft"}
+{"id": "u01", "state": {"stable_transcript": "受付は二階で、予約番号を伝えれば手続きできます。", "current_partial": "", "recent_context": []}, "reference_label": "understanding", "label_status": "draft"}
+{"id": "e01", "state": {"stable_transcript": "何度も落ちていた試験に、昨日ようやく合格できました。", "current_partial": "", "recent_context": [{"speaker": "user", "text": "仕事が終わってから毎晩勉強していました。"}]}, "reference_label": "empathic", "label_status": "draft"}
+{"id": "n02", "state": {"stable_transcript": "", "current_partial": "私が言おうとしていたのは……", "recent_context": []}, "reference_label": "no_bc", "label_status": "draft"}
+{"id": "c02", "state": {"stable_transcript": "会議では三つの話題がありました。", "current_partial": "まず一つ目が、", "recent_context": []}, "reference_label": "continuer", "label_status": "draft"}
+{"id": "u02", "state": {"stable_transcript": "会議は水曜日の午後三時に変更されました。", "current_partial": "", "recent_context": []}, "reference_label": "understanding", "label_status": "draft"}
+{"id": "e02", "state": {"stable_transcript": "大切に育てた花が初めて咲いて、朝からうれしかったです。", "current_partial": "", "recent_context": []}, "reference_label": "empathic", "label_status": "draft"}
+{"id": "n03", "state": {"stable_transcript": "", "current_partial": "あ、違う、今の言い方は……", "recent_context": []}, "reference_label": "no_bc", "label_status": "draft"}
+{"id": "c03", "state": {"stable_transcript": "そのとき友達から電話がかかってきて、", "current_partial": "", "recent_context": []}, "reference_label": "continuer", "label_status": "draft"}
+{"id": "u03", "state": {"stable_transcript": "このボタンを押すと、変更した内容が保存されます。", "current_partial": "", "recent_context": []}, "reference_label": "understanding", "label_status": "draft"}
+{"id": "e03", "state": {"stable_transcript": "ずっと準備していた発表が中止になって、力が抜けてしまいました。", "current_partial": "", "recent_context": []}, "reference_label": "empathic", "label_status": "draft"}
+{"id": "n04", "state": {"stable_transcript": "", "current_partial": "なんという名前だったかな。", "recent_context": []}, "reference_label": "no_bc", "label_status": "draft"}
+{"id": "c04", "state": {"stable_transcript": "初めは順調だったんですが、", "current_partial": "その後で、", "recent_context": []}, "reference_label": "continuer", "label_status": "draft"}
+{"id": "u04", "state": {"stable_transcript": "駅を出て左へ曲がると図書館があります。", "current_partial": "", "recent_context": []}, "reference_label": "understanding", "label_status": "draft"}
+{"id": "e04", "state": {"stable_transcript": "引っ越してから知り合いがいなくて、夜になると寂しく感じます。", "current_partial": "", "recent_context": []}, "reference_label": "empathic", "label_status": "draft"}
+{"id": "n05", "state": {"stable_transcript": "", "current_partial": "まだ言葉にできていないんですけど。", "recent_context": []}, "reference_label": "no_bc", "label_status": "draft"}
+{"id": "c05", "state": {"stable_transcript": "何があったか順に説明しますね。", "current_partial": "最初に、", "recent_context": []}, "reference_label": "continuer", "label_status": "draft"}
+{"id": "u05", "state": {"stable_transcript": "資料の前半は手順で、後半は測定結果です。", "current_partial": "", "recent_context": []}, "reference_label": "understanding", "label_status": "draft"}
+{"id": "e05", "state": {"stable_transcript": "落ち込んでいたときに友達が会いに来てくれて、本当に助かりました。", "current_partial": "", "recent_context": []}, "reference_label": "empathic", "label_status": "draft"}
+{"id": "n06", "state": {"stable_transcript": "", "current_partial": "次の単語が出てこなくて、ええと。", "recent_context": []}, "reference_label": "no_bc", "label_status": "draft"}
+{"id": "c06", "state": {"stable_transcript": "合格したと思っていたんですが、", "current_partial": "実は、", "recent_context": []}, "reference_label": "continuer", "label_status": "draft"}
+{"id": "u06", "state": {"stable_transcript": "正確には、火曜日ではなく木曜日に提出します。", "current_partial": "", "recent_context": []}, "reference_label": "understanding", "label_status": "draft"}
+{"id": "e06", "state": {"stable_transcript": "合格だと思っていた結果が取り消されて、どう受け止めればいいのか分かりません。", "current_partial": "", "recent_context": []}, "reference_label": "empathic", "label_status": "draft"}

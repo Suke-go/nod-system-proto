@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ja"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>聞き手モデル — 意味観測の評価</title>
+<style>
+*{box-sizing:border-box}body{font:16px/1.7 system-ui,sans-serif;background:#f3f5f8;color:#19283a;margin:0}main{max-width:980px;margin:32px auto;padding:24px;background:white;border-radius:16px}h1{font-size:25px}h2{font-size:18px}p{margin:12px 0}.hint{color:#506174;font-size:14px}.text{white-space:pre-wrap;background:#f0f4f8;padding:16px;border-radius:8px;overflow-wrap:anywhere}fieldset{border:1px solid #c8d3df;border-radius:8px;margin:16px 0;padding:16px}legend{font-weight:650}select,input,button{font:inherit;padding:8px;border:1px solid #91a2b5;border-radius:6px}select{width:100%;background:white}button{cursor:pointer;background:#edf2f8;color:#162b44}button.primary{background:#145bb0;color:white}button:disabled{opacity:.4;cursor:default}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}#message{min-height:28px;color:#145b3a}label{display:block}.edited{color:#975100}details{margin:12px 0}footer{margin-top:20px;border-top:1px solid #ddd;padding-top:16px}
+</style><main>
+<h1>聞き手モデル：意味観測の評価</h1>
+<p>その時点で分類器に渡された文章だけを読み、今の発話が伝えていることを判断してください。続きや話者の内心を推測せず、過去の話の感情を新しい話題に引き継がないでください。</p>
+<p class="hint">モデルの予測とロボットの反応は表示していません。これは文字の意味の評価です。実際に正しく聞き取れたか、反応のタイミングが適切かは、この画面では評価できません。「判断不能」は欠測として扱われます。</p>
+<div class="toolbar"><label>評価者ID <input id="annotator" placeholder="例：reviewer-01" autocomplete="off"></label><span id="progress"></span></div>
+<p id="position"></p><h2>現在の発話</h2><div class="text" id="current"></div>
+<details open><summary>直前までの文脈</summary><div class="text" id="context"></div></details>
+<details><summary>認識結果の安定部分と暫定部分</summary><div class="text" id="parts"></div></details>
+<div id="heads"></div>
+<div class="toolbar"><button id="prev">前へ</button><button class="primary" id="confirm">評価を確定して次へ</button><button id="next">次へ（未確定なら保留）</button><button id="unreview">確定を取り消す</button></div>
+<p id="message" role="status" aria-live="polite"></p>
+<footer><div class="toolbar"><button id="download">評価ファイルを保存</button><label>保存した評価を読み込む <input id="import" type="file" accept=".jsonl"></label></div>
+<p class="hint">画面を閉じる前に「評価ファイルを保存」を押してください。入力途中の項目も保存しますが、「評価を確定」を押した項目だけが分析対象になります。JSONLファイルは同じ評価画面に読み込んで続けられます。ファイルはこのPCで処理し、外部へ送信しません。</p></footer>
+</main>
+<script id="dataset" type="application/json">__REVIEW_DATA__</script>
+<script>
+'use strict';
+const initial=JSON.parse(document.getElementById('dataset').textContent);
+let rows=structuredClone(initial),index=0,unsaved=false;
+const $=id=>document.getElementById(id);
+const definitions={
+interpretability:{title:'1. 意味を解釈できるか',help:'今すでに表現された内容と伝達上の働きに、一貫した解釈が成立しますか。賛成・真偽・聞こえやすさは判断しません。理由がまだなくても、明示された気持ちは解釈できます。中心の述語や指示対象が欠ける場合は未解決です。',options:{unresolved:'未解決：重要な内容や関係が足りない／曖昧',resolved:'解釈可能：今ある内容の意味が取れる'}},
+appraisal:{title:'2. 明示された個人的な意味合い',help:'現在の発話で、話者自身にとっての喜び・獲得、困難・損失などが表現されていますか。事実説明、引用、仮定の感情、結果や評価のない努力の話は中立です。否定と対比を考慮してください。「共感してほしい」という内心は推測しません。',options:{neutral:'中立／個人的な正負の意味が示されていない',positive:'肯定的：成功・安堵・喜び・獲得',negative:'否定的：困難・苦痛・失望・損失',mixed:'両方：正負がともに明示され、片方に集約できない'}},
+completion:{title:'3. 局所的に内容が完結しているか',help:'会話のターン全体の終了ではなく、今の命題・出来事・評価・感情が成立しているかを判断します。文末の句読点だけで決めず、未完の否定・対比・訂正は未完結とします。',options:{incomplete:'未完結：必要な続きがある',complete:'完結：今の内容として成立している'}},
+response_demand:{title:'4. 実質的な返答や行為を求めているか',help:'この聞き手への回答・判断・同意・作業の要求で、一般的な頷きが回答や承諾に誤解されうるかを判断します。引用や修辞疑問は必ずしも要求ではありません。',options:{not_required:'要求なし：説明や体験・感情の共有',required:'要求あり：回答・判断・同意・行為を求める'}}
+};
+for(const [head,d]of Object.entries(definitions)){
+const box=document.createElement('fieldset'),legend=document.createElement('legend'),help=document.createElement('p'),select=document.createElement('select');
+legend.textContent=d.title;help.textContent=d.help;help.className='hint';select.id=head;select.setAttribute('aria-label',d.title);
+for(const [value,label]of Object.entries({'':'判断不能／保留',...d.options})){const option=document.createElement('option');option.value=value;option.textContent=label;select.append(option)}
+select.addEventListener('change',()=>{rows[index].labels[head]=select.value||null;rows[index].reviewed=false;unsaved=true;status();$('message').textContent='変更を確定してください。'});
+box.append(legend,help,select);$('heads').append(box);
+}
+function status(){$('progress').textContent=`確定 ${rows.filter(r=>r.reviewed).length} / ${rows.length}`;$('position').textContent=`${index+1} / ${rows.length} · ${rows[index].language} · ${rows[index].split} · ${rows[index].reviewed?'確定済み':'未確定'}`}
+function show(){const r=rows[index],s=r.input;$('current').textContent=(s.stable_transcript||'')+(s.current_partial||'');$('context').textContent=typeof s.recent_context==='string'?s.recent_context:(s.recent_context||[]).map(item=>typeof item==='string'?item:item.text||'').join('\n\n')||'（文脈なし）';$('parts').textContent=`安定部分：${s.stable_transcript||'（なし）'}\n暫定部分：${s.current_partial||'（なし）'}`;for(const head of Object.keys(definitions))$(head).value=r.labels[head]||'';$('prev').disabled=index===0;$('next').disabled=index===rows.length-1;status();window.scrollTo({top:0,behavior:'instant'})}
+$('prev').onclick=()=>{if(index>0)index--;show()};$('next').onclick=()=>{if(index<rows.length-1)index++;show()};
+$('confirm').onclick=()=>{const reviewer=$('annotator').value.trim();if(!reviewer){$('message').textContent='評価者IDを入力してください。';$('annotator').focus();return}rows[index].annotator=reviewer;rows[index].reviewed=true;unsaved=true;$('message').textContent='評価を確定しました。ファイル保存でPCに書き出せます。';if(index<rows.length-1)index++;show()};
+$('unreview').onclick=()=>{rows[index].reviewed=false;unsaved=true;status();$('message').textContent='確定を取り消しました。'};
+$('download').onclick=()=>{const url=URL.createObjectURL(new Blob([rows.map(r=>JSON.stringify(r)).join('\n')+'\n'],{type:'application/x-ndjson;charset=utf-8'}));const link=document.createElement('a');link.href=url;link.download='annotations-reviewed.jsonl';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);unsaved=false;$('message').textContent='保存を開始しました。ブラウザのダウンロード先を確認してください。'};
+$('import').onchange=async event=>{try{const file=event.target.files[0];if(!file)return;const imported=(await file.text()).trim().split(/\r?\n/).map(line=>JSON.parse(line));if(imported.length!==initial.length)throw Error('項目数が一致しません');const lookup=new Map(imported.map(r=>[r.id,r]));if(lookup.size!==initial.length)throw Error('項目IDが重複しています');const restored=initial.map(original=>{const r=lookup.get(original.id);if(!r)throw Error('異なる評価セットです');for(const key of Object.keys(original)){if(['labels','reviewed','annotator'].includes(key))continue;if(JSON.stringify(r[key])!==JSON.stringify(original[key]))throw Error('文章やデータ区分が変更されています')}if(!r.labels||Object.keys(r.labels).sort().join()!==Object.keys(definitions).sort().join())throw Error('評価項目が一致しません');for(const [head,d]of Object.entries(definitions))if(r.labels[head]!==null&&!Object.hasOwn(d.options,r.labels[head]))throw Error('不明なラベルです');if(typeof r.reviewed!=='boolean'||(r.reviewed&&(typeof r.annotator!=='string'||!r.annotator.trim())))throw Error('確定状態または評価者IDが不正です');return r});rows=restored;index=0;unsaved=false;show();$('message').textContent='保存した評価を読み込みました。'}catch(error){$('message').textContent='読み込み失敗：'+error.message}finally{event.target.value=''}};
+window.addEventListener('beforeunload',event=>{if(unsaved){event.preventDefault();event.returnValue=''}});show();
+</script></html>

@@ -1,0 +1,241 @@
+{
+  "schema_version": 1,
+  "status": "live_audio_experiment",
+  "profile": "research_direct_v2",
+  "audio": {
+    "sample_rate_hz": 16000,
+    "frame_ms": 20,
+    "ring_buffer_seconds": 30,
+    "channels": 1
+  },
+  "runtime": {
+    "control_tick_ms": 50,
+    "event_queue_capacity": 1024,
+    "dashboard_hz": 10,
+    "inference_device_policy": "benchmark_before_selecting"
+  },
+  "asr": {
+    "backend": "faster_whisper_cpu_int8",
+    "language": "ja",
+    "partial_interval_target_ms": 250,
+    "stable_prefix_agreement_updates": 2,
+    "stable_prefix_min_age_ms": 300,
+    "utterance_close_silence_ms": 700,
+    "confidence_missing_policy": "renormalize_available_weights"
+  },
+  "timing": {
+    "backend": "maai_vap_bc_cpu",
+    "language": "jp",
+    "frame_rate_hz": 10,
+    "score_semantics": "uncalibrated_bc_score_until_validated",
+    "opportunity_max_age_ms": 250,
+    "open_threshold": 0.4,
+    "close_threshold": 0.25,
+    "open_hold_ms": 100,
+    "rearm_hold_ms": 200,
+    "expire_open_window_ms": 2000,
+    "scheduled_onset_enabled": false
+  },
+  "semantic": {
+    "backend": "jev",
+    "access_status": "user_confirmed",
+    "api_key_env": "TYPESAFE_API_KEY",
+    "base_url": "https://api.typesafe.ai",
+    "model": "jev-1.13.0",
+    "question_version": "listener-function-ja-en-v2",
+    "context_window_seconds": 20,
+    "max_context_characters": 2000,
+    "max_current_characters": 2000,
+    "debounce_ms": 120,
+    "max_coalesce_wait_ms": 300,
+    "min_dispatch_interval_ms": 250,
+    "max_inflight": 1,
+    "pending_slots": 1,
+    "total_deadline_ms": 1500,
+    "sdk_max_retries": 0,
+    "initial_backoff_ms": 1000,
+    "max_backoff_ms": 30000,
+    "source_max_age_ms": 3000,
+    "append_lag_for_specific_response_ms": 300,
+    "query_on_identical_input": false,
+    "refine_exact_final": true
+  },
+  "belief": {
+    "class_order": [
+      "no_bc",
+      "continuer",
+      "understanding",
+      "empathic"
+    ],
+    "initial": [
+      0.25,
+      0.25,
+      0.25,
+      0.25
+    ],
+    "transition": {
+      "type": "continuous_reset",
+      "stationary": [
+        0.25,
+        0.25,
+        0.25,
+        0.25
+      ],
+      "half_life_ms": 4000
+    },
+    "calibration": {
+      "type": "identity_until_fitted",
+      "probability_floor": 1e-06
+    },
+    "observation_mode": "replace_within_utterance",
+    "reliability_weights": {
+      "asr_confidence": 0.3,
+      "stability": 0.5,
+      "revision_quality": 0.2
+    },
+    "revision_window_updates": 5,
+    "max_semantic_epoch_ms": 30000,
+    "observation_rule": "direct",
+    "history_mode": "none"
+  },
+  "prominence": {
+    "backend": "acn_numpy",
+    "model_manifest": "models/acn/manifest.json",
+    "mode": "bidirectional_delayed",
+    "feature_order": [
+      "log_word_duration",
+      "mean_mfcc_0",
+      "std_mfcc_2"
+    ],
+    "normalization": "checkpoint_defined",
+    "score_mapping": "artifact_defined",
+    "max_audio_age_ms": 1000,
+    "update_timeout_ms": 100,
+    "default_strength": 0.25,
+    "missing_model_mode": "degraded_explicit",
+    "causal_masking_enabled": false
+  },
+  "policy": {
+    "functions": [
+      "none",
+      "continuer",
+      "understanding",
+      "empathic"
+    ],
+    "utility_by_function": {
+      "none": [
+        0,
+        -0.2,
+        -0.4,
+        -0.6
+      ],
+      "continuer": [
+        -1,
+        1,
+        0.25,
+        -0.25
+      ],
+      "understanding": [
+        -1.5,
+        0.2,
+        1,
+        -0.15
+      ],
+      "empathic": [
+        -3,
+        -1,
+        -0.6,
+        1.4
+      ]
+    },
+    "tie_break_order": [
+      "none",
+      "continuer",
+      "understanding",
+      "empathic"
+    ],
+    "minimum_gain_over_none": 0.1,
+    "minimum_asr_reliability": 0.4,
+    "max_actions_per_opportunity": 1,
+    "allow_clap": false,
+    "intensity_ranges": {
+      "continuer": [
+        0.15,
+        0.35
+      ],
+      "understanding": [
+        0.25,
+        0.7
+      ],
+      "empathic": [
+        0.35,
+        0.75
+      ]
+    },
+    "strong_nod_threshold": 0.6,
+    "opportunity_weighting": "gate_only",
+    "understanding_action": "STRONG_NOD",
+    "endpoint_specific_ack": {
+      "enabled": true,
+      "minimum_reliability": 0.65,
+      "minimum_probability": 0.65,
+      "minimum_margin": 0.2,
+      "minimum_belief": 0.5,
+      "allowed_final_reasons": [
+        "silence"
+      ]
+    },
+    "stable_clause_ack": false
+  },
+  "motor": {
+    "cooldown_after_completion_ms": 1800,
+    "ack_timeout_ms": 300,
+    "execution_timeout_ms": 2500,
+    "command_ttl_ms": 250,
+    "prepare_ttl_ms": 500,
+    "automatic_execute_retry": false,
+    "default_durations_ms": {
+      "SMALL_NOD": 350,
+      "STRONG_NOD": 500,
+      "EMPATHIC_EXPRESSION": 600
+    }
+  },
+  "output": {
+    "transport": "websocket",
+    "bind_host": "127.0.0.1",
+    "port": 8765,
+    "clock_protocol": "relative_ttl_and_offset_handshake",
+    "max_inflight_actions": 1,
+    "unknown_delivery_policy": "query_status_then_fault"
+  },
+  "logging": {
+    "format": "jsonl",
+    "record_audio": false,
+    "record_transcript": true,
+    "retain_raw_jev_distribution": true,
+    "record_dropped_observations": true,
+    "include_secret_headers": false,
+    "flush_interval_ms": 1000,
+    "decision_diagnostics": true,
+    "research_diagnostics": true
+  },
+  "evaluation": {
+    "semantic_pilot_utterances": 60,
+    "semantic_target_utterances": 120,
+    "load_test_minutes": 30,
+    "decision_to_command_p95_target_ms": 50,
+    "targets_status": "provisional_not_measured"
+  },
+  "research": {
+    "method": "reliability_weighted_direct",
+    "calibration": "identity_unfitted",
+    "prior": "symmetric_assumption_not_estimated",
+    "parameters_status": "development_not_validated",
+    "protocol_version": "research-v2",
+    "filter_history": "none",
+    "stable_clause_extension": false,
+    "semantic_context": "shared_recent_20s",
+    "endpoint_extension": true,
+    "implementation_sha256": "c2b1c8c4971dd6cd97e9bf469842216a14ffd82dbc86e3fe0108808b1cff591b"
+  }
+}

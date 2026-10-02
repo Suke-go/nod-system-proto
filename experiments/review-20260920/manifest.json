@@ -1,0 +1,11 @@
+{
+  "schema": "listener-head-review-v1",
+  "sessions": [
+    "31df4ad418ffa44744311a46ed549287d2d6f59900deb35369d36dfa46cfb690"
+  ],
+  "items": 57,
+  "split": "development",
+  "selection": "last accepted observation per semantic unit; overlapping units remain session-grouped",
+  "scope": "text semantic judgments only; no perception or timing ground truth",
+  "annotated": false
+}

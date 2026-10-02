@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="ja"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>nod · Listening lab</title>
+<style>
+:root{font-family:system-ui,'Yu Gothic',sans-serif;color:#203b39;background:#edf2ed}*{box-sizing:border-box}body{margin:0;padding:30px;max-width:1440px;margin:auto}header{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}h1{font-size:34px;letter-spacing:-1px;margin:0}h1 span{font-size:13px;font-weight:500;letter-spacing:2px;margin-left:20px}button{border:1px solid #b5c9be;border-radius:30px;background:#fff;padding:12px 22px;color:#25483d;cursor:pointer}.grid{display:grid;grid-template-columns:360px 1fr;gap:20px}.card{background:#fffef9;border:1px solid #dbe4db;border-radius:24px;padding:24px;margin-bottom:20px}.eyebrow{font-size:11px;letter-spacing:2px;color:#62746d;font-weight:700}.label{font-size:13px;color:#647770}.avatar-wrap{height:225px;display:grid;place-items:center}.robot{width:185px;height:155px;border-radius:30px;background:#283e39;border:12px solid #c6d9bc;box-shadow:0 10px 0 #a4b59d;display:flex;align-items:center;justify-content:center;gap:32px;position:relative;transform-origin:center bottom}.eye{width:12px;height:39px;background:#e8efb8;border-radius:9px}.mouth{position:absolute;bottom:27px;width:27px;height:8px;border-bottom:3px solid #e8efb8;border-radius:50%}.robot.empathic .eye{height:10px;transform:rotate(-10deg)}.robot.empathic .eye:last-of-type{transform:rotate(10deg)}.status{background:#e4eee1;border-radius:15px;padding:12px;font-size:13px}.transcript{font-size:24px;line-height:1.8;min-height:125px;margin:18px 0;overflow-wrap:anywhere}.stable{font-size:12px;color:#738475;min-height:20px;overflow-wrap:anywhere}.columns{display:grid;grid-template-columns:1fr 1fr;gap:28px}h2{font-size:17px;font-weight:600;margin:0 0 20px}.row{margin:14px 0}.row-label{display:flex;justify-content:space-between;font-size:12px;margin-bottom:7px}.track{height:7px;border-radius:5px;background:#e7ece2;overflow:hidden}.fill{height:100%;background:#5b8565;transition:width .2s;width:0}.raw .fill{background:#a5b577}.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:24px}.metric{border-top:1px solid #dbe4db;padding-top:12px}.metric strong{display:block;font-size:23px;font-weight:500;margin-top:5px}.sub{font-size:12px;color:#647770;line-height:1.8}.events{font-size:13px;line-height:1.9;min-height:70px}.tag{font-size:12px;padding:7px 12px;border:1px solid #b9cebf;border-radius:20px;display:inline-block;margin-top:10px}footer{font-size:11px;color:#748176;line-height:1.8}@media(max-width:900px){body{padding:16px}.grid{grid-template-columns:1fr}.avatar-wrap{height:190px}.columns{gap:18px}h1 span{display:block;margin:4px 0 0}}
+
+.robot.warm .eye{height:13px;transform:rotate(-7deg)}.robot.warm .mouth{height:14px}
+.robot.concerned .eye{height:25px;transform:rotate(12deg)}.robot.concerned .eye:last-of-type{transform:rotate(-12deg)}
+.robot.concerned .mouth{border-bottom:0;border-top:3px solid #e8efb8;height:10px;bottom:22px}
+.semantic-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.semantic-list{font-size:13px;line-height:1.9}
+@media(max-width:600px){.semantic-grid{grid-template-columns:1fr}}
+</style>
+<header><h1>nod<span>LISTENING LAB / 聞き手の認知実験</span></h1><button id="stop">セッションを終了</button></header>
+<div class="grid"><aside><section class="card"><div class="eyebrow">PC AVATAR · LISTENING AGENT</div><div class="avatar-wrap"><div class="robot" id="robot"><i class="eye"></i><i class="eye"></i><i class="mouth"></i></div></div><div class="status" id="status">接続しています…</div><div class="tag" id="mode">—</div><p class="sub">画面の動きはPCシミュレーションです。実機の動作開始時刻は計測していません。</p></section><section class="card"><h2>反応の記録</h2><div class="events" id="actions">反応を待っています。</div><p class="sub" id="reasons"></p><p class="sub">ACN未接続：意味に応じて動作強度を調整<br>発話内容から受け止め方を選びます。心理状態の診断ではありません。</p></section></aside>
+<main><section class="card" id="listener-panel" hidden>
+<div class="eyebrow">SENSOR → BELIEF → FEEDBACK</div><h2 style="margin-top:12px">ロボットの聞き手状態</h2>
+<div class="metrics"><div class="metric"><span class="label">知覚できたという信念 P</span><strong id="listener-p">—</strong></div><div class="metric"><span class="label">解釈できたという信念 U</span><strong id="listener-u">—</strong></div><div class="metric"><span class="label">状態の不確かさ</span><strong id="listener-entropy">—</strong></div></div>
+<p class="sub" id="listener-appraisal"></p><p class="sub" id="listener-context"></p>
+<details><summary>意味センサーと更新前後の分布</summary><pre class="sub" style="white-space:pre-wrap;overflow-wrap:anywhere" id="listener-detail"></pre></details>
+<p class="sub" id="listener-calibration"></p></section><section class="card" id="semantic-panel" hidden>
+<div class="eyebrow">発話内容をどう受け止めているか</div><p class="sub" id="unit"></p>
+<div class="semantic-grid"><div><h2>発話の働き</h2><div class="semantic-list" id="meaning-act"></div></div>
+<div><h2>内容のまとまり</h2><div class="semantic-list" id="meaning-progress"></div></div>
+<div><h2>語られた経験の受け止め方</h2><div class="semantic-list" id="meaning-stance"></div></div></div>
+<p class="sub" id="readiness"></p><details><summary>観測した意味分布</summary><div class="semantic-list" id="meaning-frames"></div></details>
+</section><section class="card"><div class="eyebrow">LIVE TRANSCRIPT · ローカル音声認識</div><div class="transcript" id="text">話すと、ここに認識結果が表示されます。</div><div class="stable" id="stable"></div><div class="metrics"><div class="metric"><span class="label">ASR 推論</span><strong id="asr">—</strong></div><div class="metric"><span class="label">Jev 応答</span><strong id="latency">—</strong></div><div class="metric"><span class="label">入力 RMS</span><strong id="level">—</strong></div></div></section><section class="card" id="function-panel"><div class="columns"><div class="raw"><h2 id="raw-title">Jevの意味分類</h2><div id="raw"></div><p class="sub" id="semantic">まだ評価していません</p></div><div><h2>信頼度を反映した判断</h2><div id="belief"></div><p class="sub">ASRの安定性・経過時間で調整</p></div></div></section><section class="card"><div class="eyebrow">WHEN TO RESPOND · VAP-BC</div><div class="metrics"><div class="metric"><span class="label">反応機会スコア</span><strong id="score">—</strong></div><div class="metric"><span class="label">VAP 推論</span><strong id="timing">—</strong></div><div class="metric"><span class="label">動作状態</span><strong id="motor">IDLE</strong></div></div><p class="sub">意味・タイミング・ASRの信頼度がそろうと反応します。ベイズ聞き手モデルは、知覚・意味の観測から状態を更新し、反応を選びます。</p></section></main></div>
+<footer>音声処理はPC内で実行。認識テキストと直近の会話文脈をJevに送信します。セッションログにはテキスト・確率・判断を保存し、音声とAPIキーは保存しません。</footer>
+<script>
+const $=id=>document.getElementById(id), labels=['聞き続ける','続きを促す','内容の受領','経験への受け止め'];
+for(const id of ['raw','belief'])labels.forEach((name,i)=>{let row=document.createElement('div');row.className='row';row.innerHTML='<div class="row-label"><span></span><b>—</b></div><div class="track"><div class="fill"></div></div>';row.querySelector('span').textContent=name;$(id).append(row)});
+const names={continuer:'小さくうなずく',understanding:'内容の受領を示す',empathic:'経験への受け止めを示す'};
+const reasons={substantive_response_required:'具体的な回答が必要なため保留',unit_already_acknowledged:'この内容への受領表示は完了',action_budget:'反応の回数を調整',asr_stale:'音声認識の更新待ち',opportunity_unavailable:'タイミング待ち',asr_missing:'音声認識待ち',asr_unreliable:'認識の安定待ち',semantic_missing:'意味評価待ち',semantic_stale:'意味評価の更新待ち',utterance_already_acknowledged:'この発話への受け止めは完了',utility_prefers_none:'聞き続ける判断',motor_cooldown:'動作の間隔を確保',input_unhealthy:'入力終了',motor_active:'動作中',motor_sent:'送信済み',controller_unavailable:'コントローラ待ち',motor_fault:'コントローラ異常',audio_stale:'音声更新待ち',action_selected:'内容に応じて反応',utility_prefers_none:'聞き続けています'};
+let lastAction=null,failures=0,renderTelemetry=false,faceTimer=null;
+function animateAction(a){
+ const face=$('robot');const intensity=Math.max(0,Math.min(1,a.intensity||0));
+ face.classList.remove('warm','concerned','empathic');
+ if(a.expression==='warm'||a.expression==='concerned')face.classList.add(a.expression);
+ else if(a.action==='EMPATHIC_EXPRESSION')face.classList.add('empathic');
+ const rest={transform:'translateY(0) rotate(0)'};const amount=5+intensity*30;
+ let frames=[rest,{transform:`translateY(${amount}px) rotate(${2+intensity*10}deg)`},rest];
+ if(a.action==='STRONG_NOD')frames=[rest,{transform:`translateY(${amount}px) rotate(8deg)`,offset:.42},{transform:`translateY(${amount}px) rotate(8deg)`,offset:.62},rest];
+ if(a.action==='EMPATHIC_EXPRESSION')frames=[rest,{transform:`translateY(4px) rotate(${-3-intensity*7}deg)`,offset:.3},{transform:`translateY(4px) rotate(${-3-intensity*7}deg)`,offset:.75},rest];
+ const animation=face.animate(frames,{duration:a.duration_ms});clearTimeout(faceTimer);faceTimer=setTimeout(()=>face.classList.remove('empathic','warm','concerned'),a.duration_ms+600);
+ if(renderTelemetry)animation.ready.then(()=>requestAnimationFrame(()=>requestAnimationFrame(()=>{if(document.visibilityState==='visible')fetch('/api/rendered',{method:'POST',headers:{'X-Control-Token':'__CONTROL_TOKEN__','Content-Type':'application/json'},body:JSON.stringify({action_id:a.action_id})}).catch(()=>{});})));
+}
+const meanings={inform:'説明・情報',assessment:'評価・意見',experience:'個人的な経験',question:'聞き手への質問',repair:'訂正',unknown:'未確定',open:'まだ途中',complete:'まとまりあり',neutral:'中立',positive:'肯定的',negative:'否定的',mixed:'複合的'};
+function showMeaning(s){
+ $('semantic-panel').hidden=!s.interaction;if(!s.interaction)return;
+ $('raw-title').textContent='意味観測から対応づけた応答機能';
+ for(const axis of ['act','progress','stance']){
+  const el=$('meaning-'+axis);el.replaceChildren();
+  for(const [name,value] of Object.entries(s.interaction.marginals[axis]).sort((a,b)=>b[1]-a[1])){
+   const row=document.createElement('div');row.textContent=(meanings[name]||name)+' '+(value*100).toFixed(0)+'%';el.append(row);
+  }
+ }
+ $('unit').textContent='現在の内容単位：'+(s.unit_id||'待機中');
+ $('readiness').textContent='反応可能性 '+(100*s.interaction.ready).toFixed(0)+'% · 解釈の曖昧さ '+(100*s.interaction.normalized_entropy).toFixed(0)+'% · '+(s.interaction.calibration==='identity_unfitted'?'確率は未校正':'校正済み');
+ $('meaning-frames').replaceChildren();
+ for(const [name,value] of Object.entries(s.semantic_frames||{}).sort((a,b)=>b[1]-a[1])){
+  const row=document.createElement('div');row.textContent=name+' '+(value*100).toFixed(1)+'%';$('meaning-frames').append(row);
+ }
+}
+
+function showListener(s){
+ $('listener-panel').hidden=!s.listener;$('function-panel').hidden=!!s.listener;if(!s.listener)return;
+ const b=s.listener, pct=x=>(100*x).toFixed(0)+'%';
+ $('listener-p').textContent=pct(b.perception);$('listener-u').textContent=pct(b.understanding);$('listener-entropy').textContent=pct(b.normalized_entropy);
+ $('listener-appraisal').textContent='内容への受け止め：未確定 '+pct(1-b.understanding)+' / '+Object.entries(b.appraisal).map(([k,v])=>(meanings[k]||k)+' '+pct(v)).join(' / ');
+ const c=s.decision_context||{};
+ const cueNames={none:'待つ',continuer:'小頷き',receipt:'内容受領',attentive:'受け止め',warm:'喜びを受け止める',concerned:'気遣う'};
+ $('listener-context').textContent=(c.decision_model?'選択：'+(cueNames[c.selected_realization]||'—'):'反応可能性 '+(c.readiness==null?'—':pct(c.readiness)))+' · 内容のまとまり '+(c.completion==null?'—':pct(c.completion))+' · 保持中の解釈 '+(s.retained_interpretations||[]).length+' 件';
+ $('listener-calibration').textContent=({'designed_unfitted':'観測モデル：設計値・未校正','partially_fitted_on_calibration':'観測モデル：意味軸のみ推定・知覚軸は設計値','fitted_on_calibration':'観測モデル：校正データで推定'}[b.observation_model_status]||'観測モデル：校正状態不明')+'。知覚と理解を区別した計算上の状態です。';
+ $('listener-detail').textContent=JSON.stringify({sensor:s.sensor_observation||null,retained:s.retained_interpretations||[],predicted:b.predicted,posterior:b.posterior,state_order:b.state_order,utilities:s.utilities,decision:c},null,2);
+}
+function bars(id,p){[...$(id).children].forEach((row,i)=>{row.querySelector('b').textContent=p?(100*p[i]).toFixed(0)+'%':'—';row.querySelector('.fill').style.width=p?100*p[i]+'%':'0%'})}
+async function poll(){try{const response=await fetch('/api/state',{cache:'no-store'});if(!response.ok)throw Error();const s=await response.json();renderTelemetry=!!s.render_telemetry;failures=0; $('status').textContent=s.status==='listening'?'聞いています · Listening':s.status;$('mode').textContent=(s.language==='ja'?'日本語':'English')+' / '+s.backend+' / '+(s.response||'従来');$('text').textContent=s.text||'話すと、ここに認識結果が表示されます。';$('stable').textContent=s.stable?'安定部分：'+s.stable:'';bars('raw',s.raw);bars('belief',s.belief);showMeaning(s);showListener(s);$('semantic').textContent='評価状態：'+s.semantic_status;for(const [id,key]of[['asr','asr_ms'],['latency','api_ms'],['timing','timing_ms']])$(id).textContent=s[key]==null?'—':s[key]+' ms';$('level').textContent=(s.rms||0).toFixed(3);$('score').textContent=Number(s.score||0).toFixed(3);$('motor').textContent=s.motor;$('reasons').textContent=(s.reasons||[]).map(x=>reasons[x]||x).join(' / ');if(s.action){const a=s.action;$('actions').textContent=s.actions+' 回 · '+(names[a.function]||a.function)+' / '+a.action+(a.trigger==='utterance_end'?' / 発話確定後':a.trigger==='stable_clause'?' / 文の区切り':'');if(a.action_id!==lastAction){lastAction=a.action_id;const age=(s.elapsed_ms||0)-a.at_ms;if(age<1000){animateAction(a)}}}}catch(e){if(++failures>=3){$('status').textContent='セッション終了 / 接続なし';$('stop').disabled=true}}setTimeout(poll,200)}
+$('stop').onclick=async()=>{await fetch('/api/stop',{method:'POST',headers:{'X-Control-Token':'__CONTROL_TOKEN__'}});$('status').textContent='終了しています…';$('stop').disabled=true};poll();
+</script></html>
